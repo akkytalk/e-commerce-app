@@ -12,8 +12,9 @@ import "./Products.css";
 function ProductDetail(props) {
   const { id } = useParams();
   const [product, setProduct] = React.useState([]);
-  const [, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (open) {
@@ -55,21 +56,35 @@ function ProductDetail(props) {
     setProduct(product);
   }, [id]);
   const addToBasket = () => {
-    dispatch({
-      type: "ADD_TO_BASKET",
-      item: {
-        id: id,
-        title: product.title,
-        image: product.image,
-        rating: product.rating,
-        price: product.price,
-      },
-    });
+    const itemValue = basket.length > 0 ? basket.find((b) => b.id === id) : "";
+
+    // if item is already in basket, increase quantity
+    if (itemValue) {
+      dispatch({
+        type: "INCREASE_QUANTITY",
+        item: {
+          id: id,
+          quantity: quantity,
+        },
+      });
+    } else {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        item: {
+          id: id,
+          title: product?.title,
+          image: product?.image,
+          rating: product?.rating,
+          price: product?.price,
+          quantity: quantity,
+        },
+      });
+    }
 
     setOpen(true);
   };
 
-  // console.log("product", product);
+  console.log("quantity", quantity);
   return (
     <div className="product-detail">
       <div className="product-detail-image">
@@ -77,13 +92,27 @@ function ProductDetail(props) {
       </div>
       <div className="product-detail-info">
         <h2>{product?.title}</h2>
-        <h2 className="products-rating info-rating">
-          {Array(product?.rating)
-            .fill()
-            .map((_, i) => (
-              <p>🌟</p>
-            ))}
-        </h2>
+        <div className="product-detail-feature">
+          {/* input to select 1 to 10 quantity */}
+          <div className="product-detail-feature-quantity">
+            <p>Qty</p>
+            <input
+              type="number"
+              min="1"
+              max="10"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </div>
+
+          <h2 className="products-rating info-rating">
+            {Array(product?.rating)
+              .fill()
+              .map((_, i) => (
+                <p>🌟</p>
+              ))}
+          </h2>
+        </div>
         <div className="product-detail-cart">
           <h3 className="products-price detail-price">
             <small>$</small>

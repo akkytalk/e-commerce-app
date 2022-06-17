@@ -6,8 +6,16 @@ import ClearIcon from "@material-ui/icons/Clear";
 
 import "./Products.css";
 
-function Products({ id, title, image, rating, price, redirectToDetailPage }) {
-  const [, dispatch] = useStateValue();
+function Products({
+  id,
+  title,
+  image,
+  rating,
+  price,
+  quantity,
+  redirectToDetailPage,
+}) {
+  const [{ basket }, dispatch] = useStateValue();
   const [open, setOpen] = useState(false);
   // const [modalStyle] = useState(getModalStyle);
 
@@ -73,21 +81,51 @@ function Products({ id, title, image, rating, price, redirectToDetailPage }) {
       <ClearIcon className="modal-clear" onClick={handleClose} />
     </div>
   );
-
   const addToBasket = () => {
-    dispatch({
-      type: "ADD_TO_BASKET",
-      item: {
-        id: id,
-        title: title,
-        image: image,
-        rating: rating,
-        price: price,
-      },
-    });
+    const itemValue = basket.length > 0 ? basket.find((b) => b.id === id) : "";
+
+    // if item is already in basket, increase quantity
+    if (itemValue) {
+      dispatch({
+        type: "INCREASE_QUANTITY",
+        item: {
+          id: id,
+          quantity: quantity,
+        },
+      });
+    } else {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        item: {
+          id: id,
+          title: title,
+          image: image,
+          rating: rating,
+          price: price,
+          quantity: quantity,
+        },
+      });
+    }
 
     setOpen(true);
   };
+
+  // const addToBasket = () => {
+
+  //   dispatch({
+  //     type: "ADD_TO_BASKET",
+  //     item: {
+  //       id: id,
+  //       title: title,
+  //       image: image,
+  //       rating: rating,
+  //       price: price,
+  //       quantity: quantity,
+  //     },
+  //   });
+
+  //   setOpen(true);
+  // };
   return (
     <CSSTransition key={id} timeout={200} classNames="">
       <div className="products">

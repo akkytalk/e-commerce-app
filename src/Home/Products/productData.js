@@ -61,12 +61,11 @@ export const products = [
       {
         id: 90829332,
         title:
-          "Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440",
+          "Zebronics ZEB-AC32FHD Curved Slim Gaming LED Monitor with 80cm (32”) Wide Screen, Full HD 1920x1080, 165Hz Refresh Rate, Display Port, HDMI, 300cd/m² Bright, USB, Built in Speaker and Wall mountable",
         price: 1094.98,
         rating: 4,
-        image:
-          "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg",
-        desc: "Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440",
+        image: "https://m.media-amazon.com/images/I/81bcQfYiZrL._SX522_.jpg",
+        desc: "Zebronics ZEB-AC32FHD Curved Slim Gaming LED Monitor with 80cm (32”) Wide Screen, Full HD 1920x1080, 165Hz Refresh Rate, Display Port, HDMI, 300cd/m² Bright, USB, Built in Speaker and Wall mountable",
       },
       {
         id: 64474745,
@@ -82,7 +81,7 @@ export const products = [
   {
     row: [
       {
-        id: 6484532,
+        id: 64845342,
         title: "Great Stories for Children",
         price: 10.15,
         rating: 3,

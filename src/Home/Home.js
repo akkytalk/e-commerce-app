@@ -6,11 +6,15 @@ import "./Home.css";
 import Products from "./Products/Products";
 import Slide from "./SlideShowImages/Slide";
 import { products } from "./Products/productData";
+import { useStateValue } from "../store/StateProvider";
 
 // make JSON of all the products
 
 function Home() {
   const history = useHistory();
+  const [{ search }] = useStateValue();
+
+  console.log("search", search);
 
   const redirectToDetailPage = (product) => {
     history.push(`/product-detail/${product.id}`);
@@ -28,21 +32,29 @@ function Home() {
             return (
               <div className="home-row" key={index}>
                 {row.row.length > 0
-                  ? row.row.map((product, pIndex) => {
-                      return (
-                        <Products
-                          id={product.id}
-                          title={product.title}
-                          price={product.price}
-                          rating={product.rating}
-                          image={product.image}
-                          key={pIndex}
-                          redirectToDetailPage={() =>
-                            redirectToDetailPage(product)
-                          }
-                        />
-                      );
-                    })
+                  ? row.row
+                      .filter((r) =>
+                        r.title
+                          ?.trim()
+                          ?.toLowerCase()
+                          .includes(search.trim().toLowerCase())
+                      )
+                      .map((product, pIndex) => {
+                        return (
+                          <Products
+                            id={product.id}
+                            title={product.title}
+                            price={product.price}
+                            rating={product.rating}
+                            image={product.image}
+                            key={pIndex}
+                            quantity={1}
+                            redirectToDetailPage={() =>
+                              redirectToDetailPage(product)
+                            }
+                          />
+                        );
+                      })
                   : "no products"}
               </div>
             );

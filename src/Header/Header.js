@@ -36,7 +36,16 @@ function Header() {
         />
       </Link>
       <div className="header-search">
-        <input className="header-search-input" type="text" />
+        <input
+          className="header-search-input"
+          type="text"
+          onChange={(event) =>
+            dispatch({
+              type: "SET_SEARCH",
+              search: event.target.value,
+            })
+          }
+        />
         <Search className="header-search-icon" />
       </div>
       <div className="header-nav">
